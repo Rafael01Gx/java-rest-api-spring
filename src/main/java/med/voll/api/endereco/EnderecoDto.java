@@ -9,7 +9,7 @@ public record EnderecoDto(
         @NotBlank
         String bairro,
         @NotBlank
-        @Pattern(regexp = "\\d{8}")
+        @Pattern(regexp = "^\\d{5}-?\\d{3}$")
         String cep,
         @NotBlank
         String cidade,
