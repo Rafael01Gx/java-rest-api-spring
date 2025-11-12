@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.endereco.Endereco;
 
+import java.util.Optional;
+
 @Table(name = "medicos")
 @Entity
 @Getter
@@ -29,6 +31,8 @@ public class Medico {
     @Embedded
     private Endereco endereco;
 
+    private Boolean ativo;
+
     public Medico(CadastroMedicoDto dto) {
         this.nome = dto.nome();
         this.email = dto.email();
@@ -36,5 +40,15 @@ public class Medico {
         this.crm = dto.crm();
         this.especialidade = dto.especialidade();
         this.endereco = new Endereco(dto.endereco());
+        this.ativo = true;
+    }
+
+    public void atualizar(AtualizarMedicoDto dados){
+        Optional.ofNullable(dados.nome()).ifPresent(nome -> {this.nome = nome;});
+        Optional.ofNullable(dados.email()).ifPresent(email -> {this.email = email;});
+        Optional.ofNullable(dados.endereco()).ifPresent(endereco->{this.endereco.atualizar(endereco);});
+    }
+    public void desativar(){
+        this.ativo = false;
     }
 }
