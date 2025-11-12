@@ -1,6 +1,6 @@
 package med.voll.api.services;
 
-import med.voll.api.medico.*;
+import med.voll.api.domain.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +24,10 @@ public class MedicoService {
     }
 
     @Transactional
-    public ListagemMedicoDto atualizar(Long id, AtualizarMedicoDto dto) {
+    public DetalhesMedicoDto atualizar(Long id, AtualizarMedicoDto dto) {
         var medico = this.obterMedico(id);
         medico.atualizar(dto);
-        return new ListagemMedicoDto(medico);
+        return new DetalhesMedicoDto(medico);
 
     }
 
@@ -41,6 +41,10 @@ public class MedicoService {
     public void desativar(Long id) {
         var medico = this.obterMedico(id);
         medico.desativar();
+    }
+
+    public DetalhesMedicoDto detalhar(Long id) {
+        return new DetalhesMedicoDto(this.obterMedico(id));
     }
 
     private Medico obterMedico(Long idMedico) {

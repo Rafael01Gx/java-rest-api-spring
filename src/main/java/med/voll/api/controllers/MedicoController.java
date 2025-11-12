@@ -1,10 +1,10 @@
 package med.voll.api.controllers;
 
 import jakarta.validation.Valid;
-import med.voll.api.medico.AtualizarMedicoDto;
-import med.voll.api.medico.CadastroMedicoDto;
-import med.voll.api.medico.ListagemMedicoDto;
-import med.voll.api.medico.Medico;
+import med.voll.api.domain.medico.AtualizarMedicoDto;
+import med.voll.api.domain.medico.CadastroMedicoDto;
+import med.voll.api.domain.medico.DetalhesMedicoDto;
+import med.voll.api.domain.medico.ListagemMedicoDto;
 import med.voll.api.services.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/medicos")
@@ -21,8 +22,10 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @PostMapping
-    public ResponseEntity<Medico> cadastrar(@RequestBody @Valid CadastroMedicoDto dto){
-        return ResponseEntity.ok(medicoService.cadastrar(dto));
+    public ResponseEntity<DetalhesMedicoDto> cadastrar(@RequestBody @Valid CadastroMedicoDto dto, UriComponentsBuilder uriBuilder){
+        var medico = medicoService.cadastrar(dto);
+        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DetalhesMedicoDto(medico));
     }
 
     @GetMapping
@@ -30,8 +33,13 @@ public class MedicoController {
         return ResponseEntity.ok(medicoService.listar(paginacao));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalhesMedicoDto> obter(@PathVariable Long id){
+        return ResponseEntity.ok().body(medicoService.detalhar(id));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ListagemMedicoDto> atualizar(@PathVariable Long id ,@RequestBody @Valid AtualizarMedicoDto dto){
+    public ResponseEntity<DetalhesMedicoDto> atualizar(@PathVariable Long id , @RequestBody @Valid AtualizarMedicoDto dto){
         return ResponseEntity.ok(medicoService.atualizar(id,dto));
     }
 

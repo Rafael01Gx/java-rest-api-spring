@@ -1,7 +1,6 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
-import jakarta.validation.Valid;
-import med.voll.api.endereco.EnderecoDto;
+import med.voll.api.domain.endereco.EnderecoDto;
 
 public record AtualizarMedicoDto(
         String nome,

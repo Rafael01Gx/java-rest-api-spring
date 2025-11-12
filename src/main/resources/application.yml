@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/vollmed_api
+    url: jdbc:mysql://localhost:3306/vollmed_api?createDatabaseIfNotExist=true
     username: root
     password: root
 
@@ -26,3 +26,8 @@ spring:
     locations: classpath:db/migrations
     #repair-on-migrate: true
     #clean-disabled: false
+
+
+  server:
+    error:
+      include-stacktrace: never
