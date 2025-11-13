@@ -31,3 +31,8 @@ spring:
   server:
     error:
       include-stacktrace: never
+
+
+api:
+  jwt:
+    secret: ${JWT_SECRET:xjhsuu5478t3gb2k}
