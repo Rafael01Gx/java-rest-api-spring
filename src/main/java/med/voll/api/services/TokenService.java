@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class TokenService {
 
-    @Value("{api.jwt.secret}")
+    @Value("${api.jwt.secret}")
     private String secret;
 
     public String generateToken(Usuario usuario) {
