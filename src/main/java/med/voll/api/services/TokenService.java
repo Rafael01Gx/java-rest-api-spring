@@ -13,8 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
-import java.util.Optional;
+
 
 @Service
 public class TokenService {
@@ -29,7 +28,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("API Voll.med")
                     .withSubject(usuario.getLogin())
-                    .withClaim("sub",usuario.getId())
+                    .withClaim("id",usuario.getId())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritimo);
         } catch (JWTCreationException exception) {
