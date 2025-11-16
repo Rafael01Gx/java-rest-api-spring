@@ -1,0 +1,1 @@
+java -jar .\target\api-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod --DB_URL=jdbc:mysql://localhost:3306/vollmed_api --DB_USERNAME=root --DB_PASSWORD=root
